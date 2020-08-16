@@ -371,14 +371,16 @@ def generate_html_netreport(providersummarytable, trades, report_name, custom_no
 def generate_pdf_report(trades, report_name, custom_notes):
     htmlreportfile = generate_html_report(trades, report_name, custom_notes)
     pdfreportfile = htmlreportfile.split('.')[0].split('//')[-1] + '.pdf'
-    pdfkit.from_file(htmlreportfile, pdfreportfile)
+    options = {"enable-local-file-access":""}
+    pdfkit.from_file(htmlreportfile, pdfreportfile, options=options)
     os.remove(htmlreportfile)
     return pdfreportfile
 
 def generate_pdf_netreport(providersummarytable, trades, report_name, custom_notes):
     htmlreportfile = generate_html_netreport(providersummarytable, trades, report_name, custom_notes)
     pdfreportfile = htmlreportfile.split('.')[0].split('//')[-1] + '.pdf'
-    pdfkit.from_file(htmlreportfile, pdfreportfile)
+    options = {"enable-local-file-access":""}
+    pdfkit.from_file(htmlreportfile, pdfreportfile, options=options)
     os.remove(htmlreportfile)
     return pdfreportfile
 
@@ -432,7 +434,7 @@ def start_tg():
     try:
         apiidint = int(api_id)
     except ValueError:
-        print('ValueError')
+##        print('ValueError')
         return
     client = TelegramClient(phone, api_id, api_hash)
     try:
@@ -606,7 +608,8 @@ Main Menu
     try:
         client, report_tchannel = start_tg()
     except TypeError:
-        print('TypeError')
+##        print('TypeError')
+        pass
     while True:
         try:
             tpcolumnsinp = int(input('''1. TP1 Only
