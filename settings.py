@@ -1,4 +1,4 @@
-phone = 'PHONE NUMBER WITH CC'  # example - +919856434172
+phone = 'PHONE NUMBER WITH CC'  # example - +91XXXXXXXXXX
 api_id = 'YOUR API ID'
 api_hash = 'API HASH'
 
