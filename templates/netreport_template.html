@@ -1,0 +1,221 @@
+<head>
+    <style media="screen">
+        body{
+            background-color: black;
+        }
+        .mainTable {
+            margin: 0 auto;
+            background-color: white;
+            border: 1px solid #0690E8;
+        }
+        .mainTable td {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+
+        }
+        .mainTable th {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        h1{
+            color: #0690E8;
+            margin-top:0px;
+            padding-top:0px;
+            margin-left: 30px;
+            table-layout: auto;
+            width: 450px;
+        }
+        td span{
+            color: #F2F2F2;
+            letter-spacing: 6px;
+        }
+        .datePeriod{
+            color: #F2F2F2;
+            margin-left: 30px;
+            padding-top: 0;
+        }
+
+    </style>
+
+
+</head>
+<body>
+     <br>
+     <table>
+        <tr>
+            <td colspan="10">
+                <table>
+                    <tr>
+                        <td >
+                            <h1 vertical-align="top"> ZEGA_FX REPORT</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h2 class="datePeriod">
+                                <img src="contagious.svg" width="30", height="30" />
+                                {{tradeperiod}}</h2>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td >
+                <a href="https://t.me/joinchat/HY9U4E2PxQHsUsn8X2jpFw">
+                    <img src="zegafx_logob.jpg" width="180", height="110" />
+                </a>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td >
+                            <a href="https://t.me/joinchat/HY9U4E2PxQHsUsn8X2jpFw">
+                                <img src="telegram.svg" width="25", height="25" />
+                            </a>
+                        </td>
+                        <td style="padding: 8; padding-bottom:10;">
+                            <a href="https://t.me/joinchat/HY9U4E2PxQHsUsn8X2jpFw">
+                                <span>@zegafx_community</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <a href="https://instagram.com/zega_fx?igshid=1pvxadi3ejh90">
+                                <img src="instagram.svg" width="22", height="22" />
+                            </a>
+                        </td>
+                        <td style="padding: 8; padding-bottom:10;">
+                            <a href="https://instagram.com/zega_fx?igshid=1pvxadi3ejh90">
+                                <span>Zega Fx</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <a href="https://www.youtube.com/channel/UCIbwpIlCw4OuDqb-TqU72vQ">
+                                <img src="youtube.svg" width="25", height="25" />
+                            </a>
+                        </td>
+                        <td style="padding: 8; ">
+                            <a href="https://www.youtube.com/channel/UCIbwpIlCw4OuDqb-TqU72vQ">
+                                <span>Zega Fx</span>
+                            </a>
+                        </td>
+                    </tr>
+                 </table>
+            </td>
+
+        </tr>
+    </table>
+    <br>
+
+    <table  class="mainTable" rules="all" border="1">
+        <tr>
+            <th style="background-color:#01B0F1" align="center">Channel Name</th>
+            <th  align="center">Total No. of Trades</th>
+            <th  align="center">Total No. of lots</th>
+            <th align="center">No. of T.P.</th>
+            <th align="center">No. of S.L.</th>
+            <th align="center">No. of B.E.</th>
+            <th align="center">No. of M.C.</th>
+            <th align="center">No. of R.T.</th>
+            <th align="center">Total Profit/Loss</th>
+        </tr>
+        {% for providersummary in providersummarytable %}
+        <tr>
+            <td style="background-color:#01B0F1">{{ providersummary['provider'] }}</td>
+            <td>{{ providersummary['no_trades'] }}</td>
+            <td>{{ providersummary['total_trades_lot'] }}</td>
+            <td>{{ providersummary['no_of_tp'] }}</td>
+            <td>{{ providersummary['no_of_sl'] }}</td>
+            <td>{{ providersummary['no_of_be'] }}</td>
+            <td>{{ providersummary['no_of_mc'] }}</td>
+            <td>{{ providersummary['no_of_rt'] }}</td>
+            {% if '-' in providersummary['provider_total_pl']|string %}
+            <td style="color: red;" align="left">{{ providersummary['provider_total_pl'] | round(4) }}$</td>
+            {% else %}
+            <td style="color: green;" align="left">{{ providersummary['provider_total_pl'] | round(4) }}$</td>
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2">{{custom_notes[0]}}</td>
+            <td colspan="4">{{custom_notes[1]}}</td>
+            <td align="right" colspan="2">Net P/L : </td>
+            {% if '-' in netpl|string %}
+            <td style="color: red;" align="left">{{netpl | round(4)}}$</td>
+            {% else %}
+            <td style="color: green;" align="left">{{netpl | round(4)}}$</td>
+            {% endif %}
+
+        </tr>
+    </table>
+<p align="center" style="color: #0D70D9;">*Note: TRADES CLOSED with a difference upto 10 points from OPENING PRICE will be considered as BREAKEVEN.<br>
+B.E. = BREAKEVEN, M.C. = MANUAL CLOSE, S.L. = STOP LOSS, T.P. = TAKE PROFIT, R.T. = RUNNING TRADES.
+</p>
+
+<table>
+    <tr>
+        <h3 style="color:white; padding-bottom:0px; margin-bottom:0px;">ZEGA RECOMMENDED COPIERS</h3>
+        <td  style="padding:0px 8px 0px 0px">
+            <a href="https://telegramfxcopier.io/?ref=27"><img src="telegramfxcopier.jpeg" width="75", height="75" /></a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://telegram-copytrade.com/?ref=357"><img src="telegramcopytrade.jpeg" width="75", height="75" /></a>
+        </td>
+    </tr>
+    <tr>
+        <td  style="padding:0px 8px 0px 0px">
+            <a href="https://telegramfxcopier.io/?ref=27" style="text-decoration: none; color:red">BUY NOW</a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://telegram-copytrade.com/?ref=357"style="text-decoration: none; color:red">BUY NOW</a>
+        </td>
+    </tr>
+</table>
+<br>
+<br>
+<table>
+    <tr>
+        <h3 style="color:white; padding-bottom:0px; margin-bottom:0px;">ZEGA RECOMMENDED BROKERS</h3>
+        <td  style="padding:0px 8px 0px 0px">
+            <a href="https://my.octafx.com/open-account/?refid=ib1166138"><img src="octafx.jpeg" width="75", height="75" /></a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://www.icmarkets.com/?camp=45078"><img src="icmarket.jpeg" width="75", height="75" /></a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://www.forextime.com/?partner_id=4935837"><img src="fxtm.jpeg" width="75", height="75" /></a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://my.roboforex.com/en/?a=eemc"><img src="roboforex.jpeg" width="75", height="75" /></a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://fbs.com/?ppu=8738240"><img src="fbs.jpeg" width="75", height="75" /></a>
+        </td>
+    </tr>
+    <tr>
+        <td  style="padding:0px 8px 0px 0px">
+            <a href="https://my.octafx.com/open-account/?refid=ib1166138" style="text-decoration: none; color:red">JOIN NOW</a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://www.icmarkets.com/?camp=45078" style="text-decoration: none; color:red">JOIN NOW</a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://www.forextime.com/?partner_id=4935837" style="text-decoration: none; color:red">JOIN NOW</a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://my.roboforex.com/en/?a=eemc" style="text-decoration: none; color:red">JOIN NOW</a>
+        </td>
+        <td style="padding:0px 8px 0px 0px">
+            <a href="https://fbs.com/?ppu=8738240" style="text-decoration: none; color:red">JOIN NOW</a>
+        </td>
+    </tr>
+</table>
+
+</body>
