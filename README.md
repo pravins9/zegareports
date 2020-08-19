@@ -4,5 +4,5 @@ Create profit & loss reports from MT4 Trading Account History. Use it to identif
 
 Installation
 1. Install Python 3.7+
-2. Install wkhtmltopdf
+2. Install wkhtmltopdf & set environment variables for wkhtmltopdf
 3. 
