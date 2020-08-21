@@ -321,9 +321,12 @@ def get_tradeoverview(trades):
             order_dates.append(closing_date)
 ##        order_dates.append(opening_date)
     order_dates.sort(key = lambda date: datetime.datetime.strptime(date,"%d/%m/%Y"))
-    start_date = '/'.join(order_dates[0].split('.'))
-    end_date = '/'.join(order_dates[-1].split('.'))
-    tradeperiod = start_date + ' - ' + end_date
+    try:
+        start_date = '/'.join(order_dates[0].split('.'))
+        end_date = '/'.join(order_dates[-1].split('.'))
+        tradeperiod = start_date + ' - ' + end_date
+    except IndexError:
+        tradeperiod = 'Running Trades'
 
     return (netpl, tradeperiod)
 def generate_html_report(trades, report_name, custom_notes):
@@ -484,7 +487,7 @@ def send_reports(pdfreportfiles, client, report_tchannel):
             client.send_file(1412196856, pdfreportfile)
 
 def mainprog(trades, temp_trades, provider_mode, custom_note_1, custom_note_2, client, report_tchannel):
-    custom_note_1 += 'Activated'
+    custom_note_1 += ' Activated'
     custom_notes = [custom_note_1, custom_note_2]
     if multitp_report:
         multitp_trades, no_tp_activated = find_multitps(temp_trades)
