@@ -8,6 +8,8 @@ from telethon.errors.rpcerrorlist import  PhoneNumberBannedError
 from telethon.tl.functions.messages import GetDialogsRequest
 from telethon.tl.types import (InputPeerEmpty,  ChatForbidden)
 from settings import phone, report_tchannel_id, api_id, api_hash
+import re
+alphanumeric_pattern = re.compile('[\W_]+', re.UNICODE)
 
 multitp_report = False
 
@@ -486,6 +488,12 @@ def send_reports(pdfreportfiles, client, report_tchannel):
         elif showtp['tp3']:
             client.send_file(1412196856, pdfreportfile)
 
+def clean_reportfilename(report_name):
+    report_name_chunks = report_name.split(' ')
+    report_name_chunks = [alphanumeric_pattern.sub('', chunk) for chunk in report_name_chunks]
+    report_name = ' '.join(report_name_chunks)
+    return report_name
+
 def mainprog(trades, temp_trades, provider_mode, custom_note_1, custom_note_2, client, report_tchannel):
     custom_note_1 += ' Activated'
     custom_notes = [custom_note_1, custom_note_2]
@@ -522,6 +530,7 @@ def mainprog(trades, temp_trades, provider_mode, custom_note_1, custom_note_2, c
     if provider_mode == 'yes':
         provider_trades, provider_name = get_provider_trades(trades, provider_name)
         report_name = provider_name +'_' + custom_note_1.split('Activated')[0] + '_trades_'+dtnow
+        report_name = clean_reportfilename(report_name)
         pdfreportfile = generate_pdf_report(provider_trades, report_name, custom_notes)
         pdfreportfiles.append(pdfreportfile)
         
@@ -533,8 +542,8 @@ def mainprog(trades, temp_trades, provider_mode, custom_note_1, custom_note_2, c
         for provider in providers:
             provider_trades, provider_name = get_provider_trades(trades, provider)
             report_name = provider_name +'_' + custom_note_1.split('Activated')[0] + '_trades_'+dtnow
-            if '/' in report_name:
-                report_name = report_name.replace('/', '-')
+            report_name = clean_reportfilename(report_name)
+            
             pdfreportfile = generate_pdf_report(provider_trades, report_name, custom_notes)
             pdfreportfiles.append(pdfreportfile)
             
@@ -552,6 +561,7 @@ def mainprog(trades, temp_trades, provider_mode, custom_note_1, custom_note_2, c
         providersummarytable = sorted(providersummarytable, key = lambda i: i['provider_total_pl'],reverse=True) 
 
         report_name = 'net_trades_' + custom_note_1.split('Activated')[0] +'_'+ dtnow
+        report_name = clean_reportfilename(report_name)
         pdfnetreportfile = generate_pdf_netreport(providersummarytable, trades, report_name, custom_notes)
         pdfreportfiles.append(pdfnetreportfile)
             
