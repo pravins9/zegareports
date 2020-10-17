@@ -104,7 +104,10 @@ def get_closed_trades(closed_trades_data):
         trade['sl'] = td[6].text
         trade['tp1'] = td[7].text
         trade['close_price'] = td[9].text
-        trade['commision'] = float(td[10].text)
+        try:
+            trade['commision'] = float(td[10].text)
+        except:
+            trade['commision'] = td[10].text
         trade['taxes'] = float(td[11].text)
         trade['swap'] = float(td[12].text)
         trade['profit'] = float(td[13].text)
@@ -150,7 +153,10 @@ def get_open_trades(open_trades_data):
         trade['sl'] = td[6].text
         trade['tp1'] = td[7].text
         trade['close_price'] = ''
-        trade['commision'] = float(td[10].text)
+        try:
+            trade['commision'] = float(td[10].text)
+        except:
+            trade['commision'] = td[10].text
         trade['taxes'] = float(td[11].text)
         trade['swap'] = float(td[12].text)
         trade['profit'] = float(td[13].text)
